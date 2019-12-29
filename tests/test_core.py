@@ -112,7 +112,8 @@ def resample_audio(request):
 
 
 @pytest.mark.parametrize('sr_out', [8000, 22050])
-@pytest.mark.parametrize('res_type', ['kaiser_best', 'kaiser_fast', 'scipy', 'fft', 'polyphase'])
+@pytest.mark.parametrize('res_type', ['kaiser_best', 'kaiser_fast', 'scipy', 'fft', 'polyphase', 'linear',
+                                      'sinc_best', 'sinc_fastest', 'sinc_medium', 'zero_order_hold'])
 @pytest.mark.parametrize('fix', [False, True])
 def test_resample_mono(resample_audio, sr_out, res_type, fix):
 
@@ -140,7 +141,8 @@ def test_resample_mono(resample_audio, sr_out, res_type, fix):
 
 
 @pytest.mark.parametrize('sr_out', [8000, 22050])
-@pytest.mark.parametrize('res_type', ['kaiser_best', 'kaiser_fast', 'scipy', 'fft', 'polyphase'])
+@pytest.mark.parametrize('res_type', ['kaiser_best', 'kaiser_fast', 'scipy', 'fft', 'polyphase', 'linear',
+                                      'sinc_best', 'sinc_fastest', 'sinc_medium', 'zero_order_hold'])
 @pytest.mark.parametrize('fix', [False, True])
 def test_resample_stereo(resample_audio, sr_out, res_type, fix):
 
@@ -188,7 +190,9 @@ def test_resample_scale():
     y, sr_in = librosa.load(os.path.join('tests', 'data','test1_22050.wav'),
                             mono=True, sr=None, duration=3)
 
-    for res_type in ['fft', 'kaiser_best', 'kaiser_fast', 'polyphase']:
+    for res_type in ['fft', 'kaiser_best', 'kaiser_fast', 'polyphase',
+                     'sinc_best', 'sinc_fastest', 'sinc_medium',
+                     'linear', 'zero_order_hold']:
         for sr_out in [11025, 22050, 44100]:
             yield __test, sr_in, sr_out, res_type, y
             yield __test, sr_out, sr_in, res_type, y
