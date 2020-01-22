@@ -9,11 +9,10 @@ language: python
 notifications:
   email: false
 
-python:
-    - 3.6
-
 matrix:
     include:
+        - python: 3.6
+          dist: xenial
         - python: 3.7
           dist: xenial
 
